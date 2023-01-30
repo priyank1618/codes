@@ -1,0 +1,63 @@
+class Solution
+{
+public:
+    vector<int> spiralOrder(vector<vector<int>> &matrix)
+    {
+        vector<int> ans;
+        int row = matrix.size();
+        int col = matrix[0].size();
+
+        // time to indexing
+        int startingrow = 0;
+        int endingrow = row - 1;
+        int startingcol = 0;
+        int endingcol = col - 1;
+
+        // we have to print all the element once hence hence count go to max to row*col
+        int count = 0;
+        int total = row * col;
+        while (count < total)
+        {
+            // print first/start row
+            for (int index = startingcol; count < total && index <= endingcol; index++)
+            {
+                // it will print(0,0),(0,1),(0,2)//here remain 0 will be starting col
+                // here the change is in second place then changing thing which is index is put to second place
+                // here first place which is not change then here startingcol isnt changeit will om first place
+                ans.push_back(matrix[startingrow][index]);
+                // every time after pushing element you need to increase count
+                count++;
+            }
+            // here starting row is printed then it will increase
+            startingrow++; // it lead to (1,2)
+
+            // print end/lastcolumn
+            //(1,2),(2,2) // in col remain 2 is ending col
+            for (int index = startingrow; count < total && index <= endingrow; index++)
+            {
+                ans.push_back(matrix[index][endingcol]);
+                count++;
+            }
+            endingcol--; // lead to (2,1)
+
+            // printend/lasttrow
+            //  (2,1),(2,0)//in row remain 2 is ending row
+            for (int index = endingcol; count < total && index >= startingcol; index--)
+            {
+                ans.push_back(matrix[endingrow][index]);
+                count++;
+            }
+            endingrow--; // lead to(1,0)
+
+            // print starting col
+            //(1,0)
+            for (int index = endingrow; count < total && index >= startingrow; index--)
+            {
+                ans.push_back(matrix[index][startingcol]);
+                count++;
+            }
+            startingcol++;
+        }
+        return ans;
+    }
+};
